@@ -40,7 +40,7 @@ def usuario(simbolos:dict):
             print('Numero no valido')
 
 def juego(simbolos:dict):
-    ''' Juego del gato '''
+    '''juego de gato'''
     lista_combinaciones = [
         ['1','2','3'],
         ['4','5','6'],
@@ -51,34 +51,32 @@ def juego(simbolos:dict):
         ['1','5','9'],
         ['3','5','7']
     ]
-
     en_juego = True
-    ganador = ""
+    gana = None
     movimientos = 0
     dibuja_tablero(simbolos)
     while en_juego:
-        if movimientos < 9:
-            usuario(simbolos)
-            dibuja_tablero(simbolos)
-            movimientos += 1
-            gana = checa_winner(simbolos,lista_combinaciones)
-            if gana is True:
-                en_juego = False
-                ganador = "usuario/a"
-                if movimientos < 9:
-                    ia(simbolos)
-                    dibuja_tablero(simbolos)
-                    movimientos += 1
-                    gana =  checa_winner(simbolos,lista_combinaciones)
-                else:
-                    en_juego = False
-                if gana is True:
-                    en_juego = False
-                    ganador = "Computadora"
-                if movimientos >= 9:
-                    en_juego =  False
-        else:
+        usuario(simbolos)
+        dibuja_tablero(simbolos)
+        movimientos += 1
+        gana = checa_winner(simbolos,lista_combinaciones)
+        if gana is not None:
             en_juego = False
+            continue
+        if movimientos >= 9:
+            en_juego = False
+            continue
+        ia(simbolos)
+        dibuja_tablero(simbolos)
+        movimientos += 1
+        gana = checa_winner(simbolos,lista_combinaciones)
+        if gana is not None:
+            en_juego = False
+            continue
+        if movimientos >=9:
+            en_juego = False
+            continue
+    return gana
 
 
 def checa_winner(simbolos:dict, combinaciones: list):
@@ -93,7 +91,11 @@ if __name__ == '__main__':
 
     numeros = [str(i) for i in range(1, 10)]
     dsimbolos = {x:x for x in numeros}
-    juego(dsimbolos)
+    g = juego(dsimbolos)
+    if g is not None:
+        print(f'El ganador es {g}')
+    else:
+        print(f'Empate')
     '''dibuja_tablero(dsimbolos)
     ia(dsimbolos)
     #x = random.choice(numeros)
