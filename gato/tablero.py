@@ -1,3 +1,5 @@
+import random
+
 '''
 tablero.py: Dibuja el tablero del juego de el gato
 '''
@@ -39,7 +41,7 @@ def usuario(simbolos:dict):
         else:
             print('Numero no valido')
 
-def juego(simbolos:dict):
+def juego(simbolos:dict,nombres:dict):
     '''juego de gato'''
     lista_combinaciones = [
         ['1','2','3'],
@@ -86,12 +88,12 @@ def checa_winner(simbolos:dict, combinaciones: list):
             return simbolos[c[0]]
     return None
 
-def actualiza_score(score:dict,ganador:str):
+def actualiza_score(score:dict,ganador:str,nombres:dict):
     '''Actualiza el score'''
     X = score["X"]
     O = score["O"]
     if ganador is not None:
-        print(f'El ganador es {ganador}')
+        print(f'El ganador es {nombres[ganador]}')
         if ganador == 'X':
             X["G"] += 1
             O["P"] += 1
@@ -106,11 +108,9 @@ def actualiza_score(score:dict,ganador:str):
         O["E"] += 1
         X["E"] += 1
 
-def despliega_tablero(score:dict):
+def despliega_tablero(score:dict, nombres:dict):
     ''' Despliega el tablero de score '''
     print(f'''
-    X | G: {score["X"]["G"]} | P: {score["X"]["P"]} E: {score["X"]["E"]}
-    O | G: {score["O"]["G"]} | P: {score["O"]["P"]} E: {score["O"]["E"]}
+    {nombres['X']} | G: {score['X']['G']} | P: {score['X']['P']} | E: {score['X']['E']}
+    {nombres['O']} | G: {score['O']['G']} | P: {score['O']['P']} | E: {score['O']['E']}
     ''')
-
-import random    
