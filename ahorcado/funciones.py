@@ -10,7 +10,7 @@ def carga_archivo_texto(archivo:str)->list:
         oraciones = file.readlines()
     return oraciones
 
-if __name__ == 'main':
+if __name__ == '__main__':
     lista = carga_archivo_texto('./plantillas/plantilla-0.txt')
     for elemento in lista:
         print(elemento)
