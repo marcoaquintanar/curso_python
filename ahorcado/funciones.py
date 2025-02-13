@@ -4,7 +4,6 @@ funciones auxiliares del juego Ahorcado
 import string
 import unicodedata
 from random import choice
-
 def carga_archivo_texto(archivo:str)->list:
     '''
     Carga un archivo de texto y devuelve una lista con las oraciones del archivo
@@ -44,34 +43,37 @@ def obten_palabras(lista:list)->list:
     set_palabras = {unicodedata.normalize('NFKD', palabra).encode('ascii', 'ignore').decode('ascii') for palabra in set_palabras}
     return list(set_palabras)
 
-def adivina_letra(abc:dict, palabra:str,letras_adivinadas:set, turnos:int):
+def adivina_letra(abc:dict, palabra:str, letras_adivinadas:set, turnos:int):
     '''
     Adivina una letra de una palabra
     '''
-    palabra_oculta = " "
+    palabra_oculta =  ""
     for letra in palabra:
         if letra in letras_adivinadas:
             palabra_oculta += letra
         else:
             palabra_oculta += "_"
-    print(f'Tienes {turnos} turnos')
-    print(f'La palabra es: {palabra}')
+
+    print(f'La palabra es {palabra}')
+    abcd = ' '.join(abc.values())
     print(f'El abecedario es: {abc}')
-    letra = input('Ingresa una letra: ')
+    letra = input('Ingresa una letra:')
+    letra = letra.lower()
     if len(letra) != 1 or letra not in abc:
         print('Ingresa una letra valida')
-    else:
+    else:   
         if abc[letra] == "*":
             print('Ya ingresaste esa letra')
-        else: 
-            if letra in palabra:
-                letras_adivinadas.add(letra)
-            else:
-                turnos -= 1
+        else:
+            abc[letra] = "*"
+        if letra in palabra:
+            letras_adivinadas.add(letra)  
+        else:   
+            turnos -= 1
 
-if __name__ == '__main__':
+if __name__ == '_main_':
     plantillas = carga_plantillas('plantilla')
-    despliega_plantilla(plantillas, 4)
+    despliega_plantilla(plantillas, 5)
     lista_oraciones = carga_archivo_texto('./datos/pg15532.txt')
     lista_palabras = obten_palabras(lista_oraciones)
     print(len(lista_palabras))
@@ -82,5 +84,4 @@ if __name__ == '__main__':
     turnos = 5
     print(f"Tienes {turnos} turnos")
     adivina_letra(abcdario, p, letras_adivinadas, turnos)
-    print(f"Tienes {turnos} turnos")
     adivina_letra(abcdario, p, letras_adivinadas, turnos)
