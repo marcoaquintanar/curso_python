@@ -5,6 +5,7 @@ import funciones as fn
 from random import choice
 import string
 
+
 def main(archivo_texto:str,nombre_plantilla='plantilla'):
     '''
     Progama principal
@@ -24,5 +25,16 @@ def main(archivo_texto:str,nombre_plantilla='plantilla'):
             print('Ganaste')
             break
     print(f"La palabra era {p}")
+
+print("Antes del main")
+print(__name__)
+
 if __name__ == '__main__':
-    archivo = './datos/pg15532.txt'
+    # archivo = './datos/pg15532.txt'
+    parser.add_argument('archivo', help='Archivo de texto con palabras', default='./datos/pg15532.txt')
+    args = parser.parse_args()
+    archivo = args.archivo
+    if os.stat(archivo).st_size == False:
+        print('El archivo no existe')
+        exit()
+    main(archivo)
