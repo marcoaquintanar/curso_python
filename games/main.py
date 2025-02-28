@@ -4,6 +4,7 @@ from Sport import Sport
 from Game import Game
 from Team import Team
 import json
+import game_logic as gl
 
 def main(archivo_torneo:str):
     ''' Funcion principal de game '''
@@ -49,7 +50,10 @@ def main(archivo_torneo:str):
         game = Game(A, B)
         game.play()
         print(game)
+        juego['score'] = game.score
         print("----------------")
+    tablero = gl.scoring(torneo)
+    gl.display_tablero(tablero)
 
 if __name__ == "__main__":
     archivo_torneo = ""
